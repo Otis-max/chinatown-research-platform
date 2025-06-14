@@ -1,0 +1,801 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>welcome to my world CHINATOWN</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <!-- AOS 动画库 -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" rel="stylesheet">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Noto Sans SC', sans-serif;
+            line-height: 1.6;
+            overflow-x: hidden;
+            padding-top: 50px;
+            background: linear-gradient(135deg, #f8f4f0 0%, #ede3d9 25%, #f5f1ec 50%, #e8ddd4 75%, #f2ece5 100%);
+            min-height: 100vh;
+            position: relative;
+        }
+
+        /* 添加微妙的纹理效果 */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 50%, rgba(220, 53, 69, 0.02) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(220, 53, 69, 0.02) 0%, transparent 50%),
+                radial-gradient(circle at 40% 80%, rgba(220, 53, 69, 0.02) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: -1;
+        }
+        
+       /* 导航栏样式 */
+        .navbar {
+            background: rgba(51, 51, 51, 0.95);
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.15);
+            padding: 9px 0; 
+        }
+        
+        .navbar-brand {
+            font-weight: 700;
+            color: #dc3545 !important;
+            font-size: 4rem;
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            padding: 0;
+        }
+
+        .navbar-logo {
+            height: 60px;
+            width: auto;
+            transition: transform 0.3s ease;
+        }
+
+        .navbar-logo:hover {
+            transform: scale(1.05);
+        }
+
+        /* 响应式设计 - 小屏幕时稍微缩小 */
+        @media (max-width: 768px) {
+            .navbar-logo {
+                height: 45px;
+            }
+            
+            .navbar-brand {
+                font-size: 1.6rem;
+            }
+            
+            .nav-link {
+                font-size: 1.1rem;
+                margin: 0 10px;
+            }
+            
+            .navbar {
+                padding: 6px 0;
+            }
+        }
+        
+       .nav-link {
+            color: white !important;
+            font-weight: 500;
+            margin: 0 10px;
+            transition: color 0.3s ease;
+            font-size: 1.2rem;
+        }
+        
+        .nav-link:hover {
+            color: #dc3545 !important;
+        }
+        
+        /* 内容区域 */
+        .content-section {
+            padding: 5rem 0;
+            position: relative;
+        }
+
+        /* 装饰性元素 */
+        .content-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(ellipse at top left, rgba(220, 53, 69, 0.05) 0%, transparent 60%),
+                radial-gradient(ellipse at bottom right, rgba(220, 53, 69, 0.03) 0%, transparent 60%);
+            pointer-events: none;
+            z-index: -1;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        
+        .section-title h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #2c1810;
+            margin-bottom: 1rem;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .section-title p {
+            font-size: 1.2rem;
+            color: #5d4e42;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* 迁移流向图样式 */
+        #chartdiv {
+            width: 100%;
+            height: 500px;
+            border-radius: 15px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.08);
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            margin-bottom: 2rem;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        /* 图例说明样式 */
+        .chart-legend {
+           background: rgba(255, 255, 255, 0.95);
+           backdrop-filter: blur(10px);
+           border-radius: 15px;
+           box-shadow: 0 15px 35px rgba(0,0,0,0.08);
+           padding: 2rem;
+           height: 500px;
+           overflow-y: auto;
+           border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .chart-legend h4 {
+           color: #dc3545;
+           font-weight: 700;
+           margin-bottom: 1.5rem;
+           text-align: center;
+           border-bottom: 2px solid #dc3545;
+           padding-bottom: 0.5rem;
+        }
+
+        .legend-section {
+           margin-bottom: 2rem;
+        }
+
+        .legend-section h5 {
+           color: #2c1810;
+           font-weight: 600;
+           margin-bottom: 1rem;
+           font-size: 1.1rem;
+        }
+
+        .legend-item {
+           display: flex;
+           align-items: flex-start;
+           margin-bottom: 1rem;
+           padding: 0.5rem;
+           border-radius: 8px;
+           transition: background-color 0.3s ease;
+        }
+
+        .legend-item:hover {    
+           background-color: rgba(248, 249, 250, 0.7);
+        }
+
+        .legend-color {
+           width: 16px;
+           height: 16px;
+           border-radius: 50%;
+           margin-right: 0.8rem;
+           margin-top: 0.2rem;
+           flex-shrink: 0;
+           border: 2px solid rgba(0,0,0,0.1);
+        }
+
+        .legend-text {
+           font-weight: 600;
+           color: #2c1810;
+           min-width: 120px;
+           font-size: 0.9rem;
+        }
+
+        .legend-desc {
+           color: #5d4e42;
+           font-size: 0.85rem;
+           line-height: 1.4;
+        }
+
+        .migration-stats {
+           background: rgba(248, 249, 250, 0.8);
+           backdrop-filter: blur(5px);
+           padding: 1rem;
+           border-radius: 10px;
+           border-left: 4px solid #dc3545;
+        }
+
+        .migration-stats h5 {
+           color: #dc3545;
+           font-weight: 600;
+           margin-bottom: 1rem;
+        }
+
+        .stats-item {
+           margin-bottom: 0.5rem;
+           font-size: 0.9rem;
+           color: #5d4e42;
+        }
+
+        .stats-item strong {
+           color: #2c1810;
+        }
+
+        /* 时间线样式 */
+        .timeline-section {
+            background: rgba(248, 249, 250, 0.6);
+            backdrop-filter: blur(5px);
+            padding: 5rem 0;
+        }
+
+        .timeline-container {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.08);
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .timeline-iframe {
+            width: 100%;
+            height: 800px;
+            border: none;
+        }
+
+        /* 历史事件卡片 */
+        .history-section {
+            padding: 5rem 0;
+            position: relative;
+        }
+
+        .history-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(ellipse at top right, rgba(220, 53, 69, 0.03) 0%, transparent 60%),
+                radial-gradient(ellipse at bottom left, rgba(220, 53, 69, 0.05) 0%, transparent 60%);
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .history-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.08);
+            padding: 2rem;
+            margin-bottom: 3rem;
+            transition: transform 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .history-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.12);
+        }
+
+        .history-year {
+            display: inline-block;
+            background: linear-gradient(135deg, #dc3545, #c82333);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+            box-shadow: 0 4px 8px rgba(220, 53, 69, 0.3);
+        }
+
+        .history-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #2c1810;
+            margin-bottom: 1rem;
+        }
+
+        .history-content {
+            font-size: 1rem;
+            color: #4a3c32;
+            line-height: 1.8;
+        }
+
+        .history-content strong {
+            color: #2c1810;
+        }
+
+        .history-image {
+            width: 100%;
+            max-width: 300px;
+            height: auto;
+            border-radius: 10px;
+            margin: 1rem 0;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+        }
+
+        /* 页脚 */
+        .footer {
+            background: rgba(51, 51, 51, 0.95);
+            backdrop-filter: blur(10px);
+            color: white;
+            padding: 1.5rem 0 0.5rem;
+            text-align: center;
+            margin-top: 3rem;
+        }
+        
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .hero-section h1 {
+                font-size: 2.5rem;
+            }
+            
+            .hero-section p {
+                font-size: 1.1rem;
+            }
+            
+            .section-title h2 {
+                font-size: 2rem;
+            }
+            
+            #chartdiv {
+                height: 400px;
+            }
+
+            .chart-legend {
+                height: auto;
+                margin-top: 1rem;
+            }
+
+            .legend-text {
+                min-width: 100px;
+                font-size: 0.85rem;
+            }
+
+            .legend-desc {
+                font-size: 0.8rem;
+            }
+            
+            .timeline-iframe {
+                height: 600px;
+            }
+        }
+        
+        /* 滚动动画 */
+        .fade-up {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease;
+        }
+        
+        .fade-up.aos-animate {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+    <!-- 导航栏 -->
+    <nav class="navbar navbar-expand-lg fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <img src="tubiao.jpg" alt="唐人街商标" class="navbar-logo">
+            </a>
+
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="就这个唐.html">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="About us.html">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="Origin.html">Origin</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="Development.html">Development</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="Current situation.html">Current situation</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="Video.html">Festival</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="Contact us.html">Contact us</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 华人迁移流向图 -->
+    <section class="content-section">
+        <div class="container">
+            <div class="section-title" data-aos="fade-up">
+                <h2>Overseas Migration Trends of Chinese</h2>
+                <p>Visualizing migration data and trends of Chinese people from different provinces to various continents</p>
+            </div>
+            <div class="row" data-aos="fade-up" data-aos-delay="300">
+                <!-- 左 -->
+                <div class="col-lg-5 col-md-5">
+                    <div id="chartdiv"></div>
+                </div>
+                <!-- 右 -->
+                <div class="col-lg-7 col-md-7">
+                    <div class="chart-legend">
+                        <h4>Legend Explanation</h4>
+                        <div class="legend-section">
+                            <h5>Chinese Provinces/Regions</h5>
+                            <div class="legend-item">
+                                <span class="legend-color" style="background-color: #4CAF50;"></span>
+                                <span class="legend-text">GuangDong</span>
+                                <span class="legend-desc">Major destinations: Asia, Americas, Africa</span>
+                            </div>
+                            <div class="legend-item">
+                                <span class="legend-color" style="background-color: #2196F3;"></span>
+                                <span class="legend-text">FuJian</span>
+                                <span class="legend-desc">Major destinations: Europe, Americas</span>
+                            </div>
+                            <div class="legend-item">
+                                <span class="legend-color" style="background-color: #FF9800;"></span>
+                                <span class="legend-text">ZheJiang</span>
+                                <span class="legend-desc">Major destinations: Americas, Europe</span>
+                            </div>
+                            <div class="legend-item">
+                                <span class="legend-color" style="background-color: #E91E63;"></span>
+                                <span class="legend-text">JiangSu</span>
+                                <span class="legend-desc">Major destinations: Europe</span>
+                            </div>
+                            <div class="legend-item">
+                                <span class="legend-color" style="background-color: #9C27B0;"></span>
+                                <span class="legend-text">ShanDong</span>
+                                <span class="legend-desc">Major destination: Asia</span>
+                            </div>
+                            <div class="legend-item">
+                                <span class="legend-color" style="background-color: #607D8B;"></span>
+                                <span class="legend-text">Three Northeastern Provinces[Heilongjiang, Jilin, Liaoning]</span>
+                                <span class="legend-desc">Major destination: Asia</span>
+                            </div>
+                        </div>
+                        <div class="legend-section">
+                            <h5>Destination Continents</h5>
+                            <div class="legend-item">
+                                <span class="legend-color" style="background-color: #FFC107;"></span>
+                                <span class="legend-text">Americas</span>
+                                <span class="legend-desc">Total migrants received: 1,300,000</span>
+                            </div>
+                            <div class="legend-item">
+                                <span class="legend-color" style="background-color: #8BC34A;"></span>
+                                <span class="legend-text">Asia</span>
+                                <span class="legend-desc">Total migrants received: 1,900,000</span>
+                            </div>
+                            <div class="legend-item">
+                                <span class="legend-color" style="background-color: #00BCD4;"></span>
+                                <span class="legend-text">Europe</span>
+                                <span class="legend-desc">Total migrants received: 1,050,000</span>
+                            </div>
+                            <div class="legend-item">
+                                <span class="legend-color" style="background-color: #795548;"></span>
+                                <span class="legend-text">Africa</span>
+                                <span class="legend-desc">Total migrants received: 550,000</span>
+                            </div>
+                        </div>
+                        <div class="migration-stats">
+                            <h5>Migration Statistics</h5>
+                            <div class="stats-item">
+                                <strong>Total Migrants:</strong> 4,800,000 
+                            </div>
+                            <div class="stats-item">
+                                <strong>Province with the Most Migrants:</strong> Guangdong (2,050,000)
+                            </div>
+                            <div class="stats-item">
+                                <strong>Most Popular Destination:</strong> Asia
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 排华法案时间线 -->
+    <section class="timeline-section">
+        <div class="container">
+            <div class="section-title" data-aos="fade-up">
+                <h2>Chinese Exclusion Act Historical Timeline</h2>
+                <p>Records the legislative and policy changes against Chinese people in American history</p>
+            </div>
+            <div class="timeline-container" data-aos="fade-up" data-aos-delay="300">
+                <iframe class="timeline-iframe" src="https://www.preceden.com/timelines/1283392/embed/ecd0af58be8025430e19952523eacbaa" frameborder="0"></iframe>
+            </div>
+        </div>
+    </section>
+
+    <!-- 重要历史事件 -->
+    <section class="history-section">
+        <div class="container">
+            <div class="history-card" data-aos="fade-up" data-aos-delay="100">
+                <div class="history-year">1848</div>
+                <div class="history-title">California Gold Rush</div>
+                <div class="history-content">
+                    The Gold Rush triggered a wave of global migration, attracting a large number of laborers from Guangdong, China. 
+                    The first group of Chinese arrived in San Francisco and mainly worked as miners, railroad workers, laundrymen, 
+                    and cooks—low-paid and labor-intensive jobs. This wave of immigration laid the demographic and cultural foundation 
+                    for the formation of Chinatowns across the United States and marked the collective emergence of Chinese people in 
+                    American history.
+                </div>
+            </div>
+
+            <div class="history-card" data-aos="fade-up" data-aos-delay="200">
+                <div class="history-year">1854</div>
+                <div class="history-title">People v. Hall (California Supreme Court Case)</div>
+                <div class="history-content">
+                    In this case, the California Supreme Court ruled that Chinese people could not testify in court against white people. 
+                    This decision deprived the Chinese of their most basic legal rights, leaving them unable to defend themselves through 
+                    the legal system when facing violence, bullying, or discrimination. It not only opened the door to legalized racial 
+                    discrimination, but also became the legal foundation for a series of later discriminatory laws.
+                </div>
+            </div>
+
+            <div class="history-card" data-aos="fade-up" data-aos-delay="300">
+                <div class="history-year">1871</div>
+                <div class="history-title">Los Angeles Chinese Massacre</div>
+                <div class="history-content">
+                    Due to racial prejudice and hostility from white laborers, a mob stormed into Chinatown in Los Angeles and brutally killed 
+                    at least 17 Chinese individuals, looting and burning homes and shops. Although the violence occurred publicly, no one was convicted. 
+                    This incident revealed the deep hostility toward Chinese people in society and the complicity of the justice system, and 
+                    it also prompted Chinese communities to strengthen self-protection and organization.
+                </div>
+            </div>
+
+            <div class="history-card" data-aos="fade-up" data-aos-delay="100">
+                <div class="history-year">1882</div>
+                <div class="history-title">Chinese Exclusion Act Enacted</div>
+                <div class="history-content">
+                    The act prohibited Chinese laborers from entering the United States for 10 years and explicitly stated that Chinese people could not naturalize as American citizens. 
+                    This was the first immigration restriction law in U.S. history targeting a specific ethnic group.
+                     Rooted in racism and economic competition, it directly led to a sharp decline in Chinese immigration, shrinking Chinatown populations, 
+                     and had long-term negative impacts on Sino-American relations.
+                </div>
+            </div>
+
+            <div class="history-card" data-aos="fade-up" data-aos-delay="200">
+                <div class="history-year">1885</div>
+                <div class="history-title">Rock Springs Massacre</div>
+                <div class="history-content">
+                    In Rock Springs, Wyoming, white miners, angry over wages and work assignments, turned their resentment toward Chinese laborers 
+                    and launched a large-scale violent attack. A total of 28 Chinese immigrants were killed, 15 injured, and 79 houses burned. 
+                    Although federal troops later restored order, no one was prosecuted. 
+                    This event became another typical case of anti-Chinese violence and highlighted the severity of systemic racial hatred in American society.
+                </div>
+            </div>
+
+            <div class="history-card" data-aos="fade-up" data-aos-delay="300">
+                <div class="history-year">1888</div>
+                <div class="history-title">Scott Act Enacted</div>
+                <div class="history-content">
+                    Building on the existing Chinese Exclusion Act, this act further strengthened restrictions by explicitly prohibiting Chinese laborers who had obtained re-entry 
+                    permits from returning to the United States. As a result, more than 20,000 Chinese laborers temporarily visiting family in China were denied re-entry, 
+                    and many families were permanently separated. This act deepened the harm to the Chinese community both legally and emotionally, 
+                    showing that U.S. exclusion policy had entered a ruthless and absolute stage.
+                </div>
+            </div>
+
+            <div class="history-card" data-aos="fade-up" data-aos-delay="100">
+                <div class="history-year">1892</div>
+                <div class="history-title">Geary Act Passed</div>
+                <div class="history-content">
+                   This act extended the 1882 Chinese Exclusion Act for another 10 years and for the first time required Chinese residents in the United States to carry a Certificate of Residence.
+                    Those without the certificate would face arrest and deportation. This measure triggered widespread resistance and nonviolent protests in the Chinese community,
+                     but also marked the establishment of intensive surveillance and discriminatory governance over Chinese society by the U.S. government.
+                </div>
+            </div>
+
+            <div class="history-card" data-aos="fade-up" data-aos-delay="200">
+                <div class="history-year">1904</div>
+                <div class="history-title">Peak: Chinese Exclusion Made Permanent</div>
+                <div class="history-content">
+                    All Chinese labor immigration was permanently banned, with only a few exempt groups (such as merchants and students) allowed to enter. 
+                    This policy nearly completely cut off the legal pathway for Chinese immigration, leading to aging and structural stagnation in Chinatown 
+                    populations and further deepening the isolation and marginalization of Chinese people in American society.
+                </div>
+            </div>
+
+            <div class="history-card" data-aos="fade-up" data-aos-delay="300">
+                <div class="history-year">1943</div>
+                <div class="history-title">Historical turning point: Magnuson Act Signed</div>
+                <div class="history-content">
+                    During World War II, in order to gain China's support as an ally, the U.S. government repealed the 1882 Chinese Exclusion Act in 1943 
+                    and enacted the Magnuson Act, allowing 105 Chinese immigrants to enter legally each year and permitting Chinese people to naturalize 
+                    as U.S. citizens for the first time. Although the quota was very low, this act symbolized the formal end of the exclusionary policy and 
+                    was an important victory in the Chinese community's struggle for equal rights.<br>
+                    <strong>The official end of the Chinese Exclusion Policy</strong>
+                </div>
+            </div>
+
+            <div class="history-card" data-aos="fade-up" data-aos-delay="100">
+                <div class="history-year">2011</div>
+                <div class="history-title">Formal Apology by the U.S. Senate</div>
+                <div class="history-content">
+                    The U.S. Senate passed Resolution 201, formally apologizing to the Chinese community for the Chinese Exclusion Act and related laws implemented in the 19th and early 20th centuries. 
+                    The resolution acknowledged that the legislation was "inconsistent with American values." Although the apology came late, it represented official recognition of historical injustice 
+                    and an important step toward reflection and reconciliation in American society.
+                </div>
+            </div>
+        </div>
+    </section>
+  
+    <!-- 页脚 -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2025 Universiti Malaya MLIS. All rights reserved.</p>
+            <p>Explore the development of Chinatown and inherit Chinese civilization</p>
+            <p>Designed by &nbsp &nbsp &nbsp &nbspZHAO XIAOMING  &nbsp &nbsp &nbsp &nbsp ZHOU SHENGNAN</p>
+            <p>LU WEIXIN &nbsp &nbsp &nbsp &nbsp  GUO JIAYI &nbsp &nbsp &nbsp &nbsp LI JIALIN</p>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <!-- AOS 动画库 -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+    
+    <!-- amCharts 库 -->
+    <script src="https://cdn.amcharts.com/lib/5/index.js"></script>
+    <script src="https://cdn.amcharts.com/lib/5/flow.js"></script>
+    <script src="https://cdn.amcharts.com/lib/5/themes/Animated.js"></script>
+    
+    <script>
+        // 初始化 AOS 动画
+        AOS.init({
+            duration: 800,
+            easing: 'ease-in-out',
+            once: true
+        });
+
+        // 华人迁移流向图
+        am5.ready(function() {
+            // Create root element
+            var root = am5.Root.new("chartdiv");
+
+            // Set themes
+            root.setThemes([am5themes_Animated.new(root)]);
+
+            // Create series
+            var series = root.container.children.push(
+                am5flow.ChordDirected.new(root, {
+                    sourceIdField: "from",
+                    targetIdField: "to",
+                    valueField: "value",
+                    sort: "ascending"
+                })
+            );
+
+            series.links.template.set("fillStyle", "source");
+
+            series.nodes.get("colors").set("step", 2);
+            series.nodes.data.setAll([
+                { id: "广东 GuangDong", fill: am5.color("#4CAF50") },
+                { id: "福建 FuJian", fill: am5.color("#2196F3") },
+                { id: "浙江 ZheJiang", fill: am5.color("#FF9800") },
+                { id: "江苏 JiangSu", fill: am5.color("#E91E63") },
+                { id: "山东 ShanDong", fill: am5.color("#9C27B0") },
+                { id: "东北 NorthEast", fill: am5.color("#607D8B") },
+                { id: "美洲 Americas", fill: am5.color("#FFC107") },
+                { id: "亚洲 Asia", fill: am5.color("#8BC34A") },
+                { id: "欧洲 Europe", fill: am5.color("#00BCD4") },
+                { id: "非洲 Africa", fill: am5.color("#795548") }
+            ]);
+
+            series.nodes.get("colors").set("step", 2);
+
+            series.bullets.push(function (_root, _series, dataItem) {
+                var bullet = am5.Bullet.new(root, {
+                    locationY: Math.random(),
+                    sprite: am5.Circle.new(root, {
+                        radius: 2,
+                        fill: dataItem.get("source").get("fill")
+                    })
+                });
+
+                bullet.animate({
+                    key: "locationY",
+                    to: 1,
+                    from: 0,
+                    duration: Math.random() * 1000 + 2000,
+                    loops: Infinity
+                });
+
+                return bullet;
+            });
+
+            series.nodes.labels.template.setAll({
+                textType: "regular",
+                fill: root.interfaceColors.get("background"),
+                fontSize: "1.1em",
+                radius: -5
+            });
+
+            series.nodes.bullets.push(function (_root, _series, dataItem) {
+                return am5.Bullet.new(root, {
+                    sprite: am5.Circle.new(root, {
+                        radius: 20,
+                        fill: dataItem.get("fill")
+                    })
+                });
+            });
+
+            series.children.moveValue(series.bulletsContainer, 0);
+            series.nodes.labels.template.set("visible", false);
+
+            // Set data
+            series.data.setAll([
+                { from: "广东 GuangDong", to: "亚洲 Asia", value: 900000 },
+                { from: "广东 GuangDong", to: "美洲 Americas", value: 600000 },
+                { from: "广东 GuangDong", to: "非洲 Africa", value: 550000 },
+                { from: "福建 FuJian", to: "欧洲 Europe", value: 400000 },
+                { from: "福建 FuJian", to: "美洲 Americas", value: 600000},
+                { from: "浙江 ZheJiang", to: "美洲 Americas", value: 100000 },
+                { from: "浙江 ZheJiang", to: "欧洲 Europe", value: 350000 },
+                { from: "山东 ShanDong", to: "亚洲 Asia", value: 600000 },
+                { from: "江苏 JiangSu", to: "欧洲 Europe", value: 300000 },
+                { from: "东北 NorthEast", to: "亚洲 Asia", value: 400000 }
+            ]);
+
+            // Make stuff animate on load
+            series.appear(1000, 100);
+        });
+        
+        // 平滑滚动
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,768 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>welcome to my world CHINATOWN</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <!-- AOS 动画库 -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" rel="stylesheet">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Noto Sans SC', sans-serif;
+            line-height: 1.6;
+            overflow-x: hidden;
+            padding-top: 50px;
+            background: linear-gradient(135deg, #f8f4f0 0%, #ede3d9 25%, #f5f1ec 50%, #e8ddd4 75%, #f2ece5 100%);
+            min-height: 100vh;
+            position: relative;
+        }
+
+        /* 添加微妙的纹理效果 */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 50%, rgba(220, 53, 69, 0.02) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(220, 53, 69, 0.02) 0%, transparent 50%),
+                radial-gradient(circle at 40% 80%, rgba(220, 53, 69, 0.02) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: -1;
+        }
+        
+        /* 导航栏样式 */
+        .navbar {
+            background: rgba(51, 51, 51, 0.95);
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.15);
+            padding: 9px 0; 
+        }
+        
+        .navbar-brand {
+            font-weight: 700;
+            color: #dc3545 !important;
+            font-size: 4rem;
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            padding: 0;
+        }
+
+        .navbar-logo {
+            height: 60px;
+            width: auto;
+            transition: transform 0.3s ease;
+        }
+
+        .navbar-logo:hover {
+            transform: scale(1.05);
+        }
+
+        /* 响应式设计 - 小屏幕时稍微缩小 */
+        @media (max-width: 768px) {
+            .navbar-logo {
+                height: 45px;
+            }
+            
+            .navbar-brand {
+                font-size: 1.6rem;
+            }
+            
+            .nav-link {
+                font-size: 1.1rem;
+                margin: 0 10px;
+            }
+            
+            .navbar {
+                padding: 6px 0;
+            }
+        }
+
+        .nav-link {
+            color: white !important;
+            font-weight: 500;
+            margin: 0 10px;
+            transition: color 0.3s ease;
+            font-size: 1.2rem;
+        }
+        
+        .nav-link:hover {
+            color: #dc3545 !important;
+        }
+        
+        /* 页面标题区域 */
+        .page-header {
+            background: linear-gradient(135deg, #dc3545, #c82333);
+            color: white;
+            padding: 4rem 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .page-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="20" cy="20" r="2" fill="rgba(255,255,255,0.1)"/><circle cx="60" cy="30" r="1.5" fill="rgba(255,255,255,0.1)"/><circle cx="80" cy="60" r="1" fill="rgba(255,255,255,0.1)"/><circle cx="30" cy="70" r="2.5" fill="rgba(255,255,255,0.1)"/></svg>');
+            animation: float 20s infinite linear;
+        }
+
+        @keyframes float {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(-100px, -100px); }
+        }
+
+        .page-header h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .page-header p {
+            font-size: 1.3rem;
+            opacity: 0.9;
+            max-width: 600px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* 视频内容区域 */
+        .video-section {
+            padding: 3rem 0;
+            position: relative;
+        }
+
+        /* 装饰性元素 */
+        .video-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(ellipse at top left, rgba(220, 53, 69, 0.05) 0%, transparent 60%),
+                radial-gradient(ellipse at bottom right, rgba(220, 53, 69, 0.03) 0%, transparent 60%);
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .video-category {
+            margin-bottom: 5rem;
+        }
+
+        .category-title {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .category-title h3 {
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: #2c1810;
+            margin-bottom: 1rem;
+            position: relative;
+            display: inline-block;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .category-title h3::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background: #dc3545;
+            border-radius: 2px;
+        }
+
+        .category-title p {
+            font-size: 1.1rem;
+            color: #5d4e42;
+            max-width: 500px;
+            margin: 1.5rem auto 0;
+        }
+
+        .video-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.08);
+            overflow: hidden;
+            margin-bottom: 2rem;
+            transition: all 0.3s ease;
+            position: relative;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .video-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 25px 45px rgba(0,0,0,0.12);
+        }
+
+        .video-container {
+            position: relative;
+            width: 100%;
+            height: 0;
+            padding-bottom: 56.25%; /* 16:9 比例 */
+            overflow: hidden;
+        }
+        
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        .video-info {
+            padding: 1.5rem;
+        }
+        
+        .video-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #2c1810;
+            margin-bottom: 0.8rem;
+            line-height: 1.4;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .video-description {
+            font-size: 0.95rem;
+            color: #5d4e42;
+            line-height: 1.5;
+            margin-bottom: 1rem;
+        }
+
+        .video-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.85rem;
+            color: #8a7a70;
+        }
+
+        .video-category-tag {
+            background: #dc3545;
+            color: white;
+            padding: 0.3rem 0.8rem;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            box-shadow: 0 2px 6px rgba(220, 53, 69, 0.3);
+        }
+
+        /* 节庆类别样式 */
+        .festival-spring .category-title h3 { color: #e74c3c; }
+        .festival-spring .category-title h3::after { background: #e74c3c; }
+        .festival-spring .video-category-tag { 
+            background: linear-gradient(135deg, #e74c3c, #c0392b);
+            box-shadow: 0 4px 8px rgba(231, 76, 60, 0.3);
+        }
+
+        .festival-traditional .category-title h3 { color: #f39c12; }
+        .festival-traditional .category-title h3::after { background: #f39c12; }
+        .festival-traditional .video-category-tag { 
+            background: linear-gradient(135deg, #f39c12, #e67e22);
+            box-shadow: 0 4px 8px rgba(243, 156, 18, 0.3);
+        }
+
+        .festival-cultural .category-title h3 { color: #9b59b6; }
+        .festival-cultural .category-title h3::after { background: #9b59b6; }
+        .festival-cultural .video-category-tag { 
+            background: linear-gradient(135deg, #9b59b6, #8e44ad);
+            box-shadow: 0 4px 8px rgba(155, 89, 182, 0.3);
+        }
+
+        .festival-modern .category-title h3 { color: #3498db; }
+        .festival-modern .category-title h3::after { background: #3498db; }
+        .festival-modern .video-category-tag { 
+            background: linear-gradient(135deg, #3498db, #2980b9);
+            box-shadow: 0 4px 8px rgba(52, 152, 219, 0.3);
+        }
+
+        /* 统计信息卡片 */
+        .festival-stats {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.08);
+            padding: 3rem;
+            margin: 4rem 0;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .festival-stats h4 {
+            color: #dc3545;
+            font-weight: 700;
+            margin-bottom: 2rem;
+            font-size: 1.8rem;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .stats-item {
+            padding: 1.5rem;
+            background: rgba(248, 249, 250, 0.8);
+            backdrop-filter: blur(5px);
+            border-radius: 15px;
+            transition: transform 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .stats-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+
+        .stats-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #dc3545;
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        .stats-label {
+            color: #5d4e42;
+            font-size: 1rem;
+            font-weight: 500;
+        }
+
+        /* 页脚 */
+        .footer {
+            background: rgba(51, 51, 51, 0.95);
+            backdrop-filter: blur(10px);
+            color: white;
+            padding: 1.5rem 0 0.5rem;
+            text-align: center;
+            margin-top: 3rem;
+        }
+        
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .page-header {
+                padding: 3rem 0;
+            }
+
+            .page-header h1 {
+                font-size: 2.2rem;
+            }
+
+            .page-header p {
+                font-size: 1.1rem;
+            }
+
+            .category-title h3 {
+                font-size: 1.8rem;
+            }
+
+            .video-info {
+                padding: 1rem;
+            }
+
+            .festival-stats {
+                padding: 2rem;
+            }
+
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 1rem;
+            }
+        }
+        
+        /* 滚动动画 */
+        .fade-up {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease;
+        }
+        
+        .fade-up.aos-animate {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+    <!-- 导航栏 -->
+    <nav class="navbar navbar-expand-lg fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <img src="tubiao.jpg" alt="唐人街商标" class="navbar-logo">
+            </a>
+
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="就这个唐.html">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="About us.html">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="Origin.html">Origin</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="Development.html">Development</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="Current situation.html">Current situation</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="Video.html">Festival</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="Contact us.html">Contact us</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 视频内容区域 -->
+    <section class="video-section">
+        <div class="container">
+            <!-- 春节庆祝 -->
+            <div class="video-category festival-spring" data-aos="fade-up">
+                <div class="category-title">
+                    <h3>Chinese New Year Celebrations</h3>
+                    <p>Experience the grandeur of Chinese New Year celebrations in Chinatowns worldwide</p>
+                </div>
+                <div class="row">
+                    <div class="col-lg-6 col-md-6 col-sm-12">
+                        <div class="video-card" data-aos="fade-up" data-aos-delay="100">
+                            <div class="video-container">
+                                <iframe 
+                                    src="https://www.youtube.com/embed/Gt2DHHwsy7w"
+                                    title="YouTube video player" 
+                                    frameborder="0"
+                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                    referrerpolicy="strict-origin-when-cross-origin" 
+                                    allowfullscreen>
+                                </iframe>
+                            </div>
+                            <div class="video-info">
+                                <h5 class="video-title">The world celebrates Chinese New Year</h5>
+                                <p class="video-description">A global overview of how different countries and cultures embrace and celebrate the Chinese New Year, showcasing the universal appeal of this traditional festival.</p>
+                                <div class="video-meta">
+                                    <span class="video-category-tag">Spring Festival</span>
+                                    <span>Global Celebrations</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-sm-12">
+                        <div class="video-card" data-aos="fade-up" data-aos-delay="200">
+                            <div class="video-container">
+                                <iframe 
+                                    src="https://www.youtube.com/embed/MdWlXOkftmk"
+                                    title="YouTube video player" 
+                                    frameborder="0"
+                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                    referrerpolicy="strict-origin-when-cross-origin" 
+                                    allowfullscreen>
+                                </iframe>
+                            </div>
+                            <div class="video-info">
+                                <h5 class="video-title">Chinese New Year Events in Bangkok Chinatown</h5>
+                                <p class="video-description">Explore the vibrant Chinese New Year celebrations in Bangkok's historic Chinatown, featuring traditional performances, street festivals, and cultural activities.</p>
+                                <div class="video-meta">
+                                    <span class="video-category-tag">Spring Festival</span>
+                                    <span>Bangkok, Thailand</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-6 col-md-6 col-sm-12">
+                        <div class="video-card" data-aos="fade-up" data-aos-delay="300">
+                            <div class="video-container">
+                                <iframe 
+                                    src="https://www.youtube.com/embed/l4fJrdHitNs"
+                                    title="YouTube video player" 
+                                    frameborder="0"
+                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                    referrerpolicy="strict-origin-when-cross-origin" 
+                                    allowfullscreen>
+                                </iframe>
+                            </div>
+                            <div class="video-info">
+                                <h5 class="video-title">Los Angeles Chinatown Chinese New Year Parade</h5>
+                                <p class="video-description">Join the spectacular Chinese New Year parade in Los Angeles Chinatown, featuring colorful dragon dances, traditional music, and community celebrations.</p>
+                                <div class="video-meta">
+                                    <span class="video-category-tag">Spring Festival</span>
+                                    <span>Los Angeles, USA</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-sm-12">
+                        <div class="video-card" data-aos="fade-up" data-aos-delay="400">
+                            <div class="video-container">
+                                <iframe 
+                                    src="https://www.youtube.com/embed/nN8vlWCLaHw"
+                                    title="YouTube video player" 
+                                    frameborder="0"
+                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                    referrerpolicy="strict-origin-when-cross-origin" 
+                                    allowfullscreen>
+                                </iframe>
+                            </div>
+                            <div class="video-info">
+                                <h5 class="video-title">Differences between Chinese and American Spring Festivals</h5>
+                                <p class="video-description">A comparative analysis of how Spring Festival traditions have evolved and adapted in American Chinese communities while maintaining their cultural essence.</p>
+                                <div class="video-meta">
+                                    <span class="video-category-tag">Spring Festival</span>
+                                    <span>Cultural Comparison</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 传统节庆 -->
+            <div class="video-category festival-traditional" data-aos="fade-up">
+                <div class="category-title">
+                    <h3>Traditional Festival Celebrations</h3>
+                    <p>Witness the beauty of traditional Chinese festivals celebrated by overseas communities</p>
+                </div>
+                <div class="row">
+                    <div class="col-lg-6 col-md-6 col-sm-12">
+                        <div class="video-card" data-aos="fade-up" data-aos-delay="100">
+                            <div class="video-container">
+                                <iframe 
+                                    src="https://www.youtube.com/embed/2MdxTS7LM0M"
+                                    title="YouTube video player" 
+                                    frameborder="0"
+                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                    referrerpolicy="strict-origin-when-cross-origin" 
+                                    allowfullscreen>
+                                </iframe>
+                            </div>
+                            <div class="video-info">
+                                <h5 class="video-title">Celebrating Mid-Autumn Festival in Malaysia</h5>
+                                <p class="video-description">Experience the Mid-Autumn Festival celebrations in Malaysia's Chinese communities, featuring lantern displays, mooncake traditions, and family gatherings.</p>
+                                <div class="video-meta">
+                                    <span class="video-category-tag">Mid-Autumn</span>
+                                    <span>Malaysia</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-sm-12">
+                        <div class="video-card" data-aos="fade-up" data-aos-delay="200">
+                            <div class="video-container">
+                                <iframe 
+                                    src="https://www.youtube.com/embed/VyFsqxFSqK4"
+                                    title="YouTube video player" 
+                                    frameborder="0"
+                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                    referrerpolicy="strict-origin-when-cross-origin" 
+                                    allowfullscreen>
+                                </iframe>
+                            </div>
+                            <div class="video-info">
+                                <h5 class="video-title">Overseas Chinese celebrate Dragon Boat Festival</h5>
+                                <p class="video-description">Join overseas Chinese communities as they celebrate the Dragon Boat Festival with traditional boat races, zongzi making, and cultural performances.</p>
+                                <div class="video-meta">
+                                    <span class="video-category-tag">Dragon Boat</span>
+                                    <span>International</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 文化传承 -->
+            <div class="video-category festival-cultural" data-aos="fade-up">
+                <div class="category-title">
+                    <h3>Cultural Heritage & Traditions</h3>
+                    <p>Discover how cultural traditions are preserved and passed down through generations</p>
+                </div>
+                <div class="row">
+                    <div class="col-lg-6 col-md-6 col-sm-12">
+                        <div class="video-card" data-aos="fade-up" data-aos-delay="100">
+                            <div class="video-container">
+                                <iframe 
+                                    src="https://www.youtube.com/embed/fIBuH6GoTCc"
+                                    title="YouTube video player" 
+                                    frameborder="0"
+                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                    referrerpolicy="strict-origin-when-cross-origin" 
+                                    allowfullscreen>
+                                </iframe>
+                            </div>
+                            <div class="video-info">
+                                <h5 class="video-title">Overseas Chinese worship their ancestors on Qingming Festival</h5>
+                                <p class="video-description">A respectful look at how overseas Chinese communities honor their ancestors during Qingming Festival, maintaining this important cultural tradition abroad.</p>
+                                <div class="video-meta">
+                                    <span class="video-category-tag">Qingming</span>
+                                    <span>Ancestral Worship</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-sm-12">
+                        <div class="video-card" data-aos="fade-up" data-aos-delay="200">
+                            <div class="video-container">
+                                <iframe 
+                                    src="https://www.youtube.com/embed/rVUHWCRTNi8"
+                                    title="YouTube video player" 
+                                    frameborder="0"
+                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                    referrerpolicy="strict-origin-when-cross-origin" 
+                                    allowfullscreen>
+                                </iframe>
+                            </div>
+                            <div class="video-info">
+                                <h5 class="video-title">How do overseas Chinese celebrate the Spring Festival</h5>
+                                <p class="video-description">An in-depth exploration of Spring Festival celebration practices among overseas Chinese communities, showing how traditions adapt while preserving their core meaning.</p>
+                                <div class="video-meta">
+                                    <span class="video-category-tag">Spring Festival</span>
+                                    <span>Cultural Practice</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+  
+    <!-- 页脚 -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2025 Universiti Malaya MLIS. All rights reserved.</p>
+            <p>Explore the development of Chinatown and inherit Chinese civilization</p>
+            <p>Designed by &nbsp &nbsp &nbsp &nbspZHAO XIAOMING  &nbsp &nbsp &nbsp &nbsp ZHOU SHENGNAN</p>
+            <p>LU WEIXIN &nbsp &nbsp &nbsp &nbsp  GUO JIAYI &nbsp &nbsp &nbsp &nbsp LI JIALIN</p>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <!-- AOS 动画库 -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+    
+    <script>
+        // 初始化 AOS 动画
+        AOS.init({
+            duration: 800,
+            easing: 'ease-in-out',
+            once: true
+        });
+
+        // 数字计数动画
+        function animateCounters() {
+            const counters = document.querySelectorAll('.stats-number');
+            
+            counters.forEach(counter => {
+                const text = counter.textContent;
+                const number = parseInt(text.replace(/[^0-9]/g, ''));
+                const suffix = text.replace(/[0-9]/g, '');
+                
+                if (number) {
+                    const duration = 2000;
+                    const step = number / (duration / 16);
+                    let current = 0;
+                    
+                    const updateCounter = () => {
+                        current += step;
+                        if (current < number) {
+                            counter.textContent = Math.floor(current) + suffix;
+                            requestAnimationFrame(updateCounter);
+                        } else {
+                            counter.textContent = number + suffix;
+                        }
+                    };
+                    
+                    updateCounter();
+                }
+            });
+        }
+        
+        // 监听滚动到统计区域时触发计数动画
+        const statsSection = document.querySelector('.festival-stats');
+        if (statsSection) {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        animateCounters();
+                        observer.unobserve(entry.target);
+                    }
+                });
+            });
+            
+            observer.observe(statsSection);
+        }
+        
+        // 平滑滚动
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // 视频卡片hover效果增强
+        document.querySelectorAll('.video-card').forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-10px) scale(1.02)';
+            });
+            
+            card.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0) scale(1)';
+            });
+        });
+    </script>
+</body>
+</html>
