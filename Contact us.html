@@ -108,7 +108,8 @@
             position: relative;
         }
 
-       
+        
+        
         .section-title {
             text-align: center;
             margin-bottom: 3rem;
@@ -136,7 +137,6 @@
         }
 
         
-
         .contact-form {
             background: rgba(255, 255, 255, 0.95);
             backdrop-filter: blur(10px);
@@ -206,13 +206,26 @@
             position: relative;
         }
 
-        
-
-        .team-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 2rem;
+        /* 更新的团队网格布局 */
+        .team-container {
             margin-top: 3rem;
+        }
+
+        /* 第一行：两个成员居中 */
+        .team-row-first {
+            display: flex;
+            justify-content: center;
+            gap: 3rem;
+            margin-bottom: 3rem;
+        }
+
+        /* 第二行：三个成员均匀分布 */
+        .team-row-second {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            max-width: 1000px;
+            margin: 0 auto;
         }
 
         .team-member {
@@ -225,6 +238,8 @@
             transition: all 0.3s ease;
             border-top: 5px solid #dc3545;
             border: 1px solid rgba(255, 255, 255, 0.2);
+            width: 100%;
+            max-width: 350px;
         }
 
         .team-member:hover {
@@ -320,6 +335,34 @@
         }
         
         /* 响应式设计 */
+        @media (max-width: 1200px) {
+            .team-row-first {
+                gap: 2rem;
+            }
+            
+            .team-row-second {
+                gap: 1.5rem;
+            }
+        }
+
+        @media (max-width: 992px) {
+            .team-row-first {
+                flex-direction: column;
+                align-items: center;
+                gap: 2rem;
+            }
+            
+            .team-row-second {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+                justify-items: center;
+            }
+            
+            .team-member {
+                max-width: 400px;
+            }
+        }
+
         @media (max-width: 768px) {
             .section-title h2 {
                 font-size: 2rem;
@@ -329,14 +372,17 @@
                 padding: 2rem 1.5rem;
             }
 
-            .team-grid {
-                grid-template-columns: 1fr;
-                gap: 1.5rem;
-            }
-
             .member-photo {
                 width: 100px;
                 height: 100px;
+            }
+            
+            .team-row-first {
+                gap: 1.5rem;
+            }
+            
+            .team-row-second {
+                gap: 1.5rem;
             }
         }
         
@@ -463,73 +509,79 @@
                     <h2>Our Team</h2>
                 </div>
 
-                <div class="team-grid">
-                    <!-- 团队成员1 - ZHAO XIAOMING -->
-                    <div class="team-member" data-aos="fade-up" data-aos-delay="100">
-                        <img src="xiaoming.jpg" alt="ZHAO XIAOMING" class="member-photo">
-                        <div class="member-name">ZHAO XIAOMING</div>
-                        <div class="member-role">Project Leader</div>
-                        <div class="member-responsibilities">
-                            <ul>
-                                <li>Project coordination</li>
-                                <li>Data visualization and chart development</li>
-                                <li>Information collection and analysis</li>
-                                <li>Strategic planning and implementation</li>
-                            </ul>
+                <div class="team-container">
+                    <!-- 第一行：两个成员居中 -->
+                    <div class="team-row-first">
+                        <!-- 团队成员1 - ZHAO XIAOMING -->
+                        <div class="team-member" data-aos="fade-up" data-aos-delay="100">
+                            <img src="xiaoming.jpg" alt="ZHAO XIAOMING" class="member-photo">
+                            <div class="member-name">ZHAO XIAOMING</div>
+                            <div class="member-role">Project Leader</div>
+                            <div class="member-responsibilities">
+                                <ul>
+                                    <li>Project coordination</li>
+                                    <li>Data visualization and chart development</li>
+                                    <li>Information collection and analysis</li>
+                                    <li>Strategic planning and implementation</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <!-- 团队成员2 - ZHOU SHENGNAN -->
+                        <div class="team-member" data-aos="fade-up" data-aos-delay="200">
+                            <img src="shengnan.jpg" alt="ZHOU SHENGNAN" class="member-photo">
+                            <div class="member-name">ZHOU SHENGNAN</div>
+                            <div class="member-role">Web Developer</div>
+                            <div class="member-responsibilities">
+                                <ul>
+                                    <li>Website architecture and development</li>
+                                    <li>Frontend interface design</li>
+                                    <li>Information organization</li>
+                                </ul>
+                            </div>
                         </div>
                     </div>
 
-                    <!-- 团队成员2 - ZHOU SHENGNAN -->
-                    <div class="team-member" data-aos="fade-up" data-aos-delay="200">
-                        <img src="shengnan.jpg" alt="ZHOU SHENGNAN" class="member-photo">
-                        <div class="member-name">ZHOU SHENGNAN</div>
-                        <div class="member-role">Web Developer</div>
-                        <div class="member-responsibilities">
-                            <ul>
-                                <li>Website architecture and development</li>
-                                <li>Frontend interface design</li>
-                                <li>Information organization</li>
-                            </ul>
+                    <!-- 第二行：三个成员均匀分布 -->
+                    <div class="team-row-second">
+                        <!-- 团队成员3 - LU WEIXIN -->
+                        <div class="team-member" data-aos="fade-up" data-aos-delay="300">
+                            <img src="weixin.jpg" alt="LU WEIXIN" class="member-photo">
+                            <div class="member-name">LU WEIXIN</div>
+                            <div class="member-role">Design Specialist</div>
+                            <div class="member-responsibilities">
+                                <ul>
+                                    <li>Logo and Chinatown Information card design</li>
+                                    <li>Information collection</li>
+                                    <li>Presentation slides design</li>
+                                </ul>
+                            </div>
                         </div>
-                    </div>
 
-                    <!-- 团队成员3 - LU WEIXIN -->
-                    <div class="team-member" data-aos="fade-up" data-aos-delay="300">
-                        <img src="weixin.jpg" alt="LU WEIXIN" class="member-photo">
-                        <div class="member-name">LU WEIXIN</div>
-                        <div class="member-role">Design Specialist</div>
-                        <div class="member-responsibilities">
-                            <ul>
-                                <li>Logo and Chinatown Information card design</li>
-                                <li>Information collection</li>
-                                <li>Presentation slides design</li>
-                            </ul>
+                        <!-- 团队成员4 - GUO JIAYI -->
+                        <div class="team-member" data-aos="fade-up" data-aos-delay="400">
+                            <img src="jiayi.jpg" alt="GUO JIAYI" class="member-photo">
+                            <div class="member-name">GUO JIAYI</div>
+                            <div class="member-role">Data Analyst</div>
+                            <div class="member-responsibilities">
+                                <ul>
+                                    <li>Word cloud analysis and visualization</li>
+                                    <li>Information collection</li>
+                                </ul>
+                            </div>
                         </div>
-                    </div>
 
-                    <!-- 团队成员4 - GUO JIAYI -->
-                    <div class="team-member" data-aos="fade-up" data-aos-delay="400">
-                        <img src="jiayi.jpg" alt="GUO JIAYI" class="member-photo">
-                        <div class="member-name">GUO JIAYI</div>
-                        <div class="member-role">Data Analyst</div>
-                        <div class="member-responsibilities">
-                            <ul>
-                                <li>Word cloud analysis and visualization</li>
-                                <li>Information collection</li>
-                            </ul>
-                        </div>
-                    </div>
-
-                    <!-- 团队成员5 - LI JIALIN -->
-                    <div class="team-member" data-aos="fade-up" data-aos-delay="500">
-                        <img src="jialin.jpg" alt="LI JIALIN" class="member-photo">
-                        <div class="member-name">LI JIALIN</div>
-                        <div class="member-role">Data Collector</div>
-                        <div class="member-responsibilities">
-                            <ul>
-                                <li>Information collection</li>
-                                <li>Source verification and validation</li>
-                            </ul>
+                        <!-- 团队成员5 - LI JIALIN -->
+                        <div class="team-member" data-aos="fade-up" data-aos-delay="500">
+                            <img src="jialin.jpg" alt="LI JIALIN" class="member-photo">
+                            <div class="member-name">LI JIALIN</div>
+                            <div class="member-role">Data Collector</div>
+                            <div class="member-responsibilities">
+                                <ul>
+                                    <li>Information collection</li>
+                                    <li>Source verification and validation</li>
+                                </ul>
+                            </div>
                         </div>
                     </div>
                 </div>
