@@ -23,26 +23,12 @@
             line-height: 1.6;
             overflow-x: hidden;
             padding-top: 50px;
-            background: linear-gradient(135deg, #f8f4f0 0%, #ede3d9 25%, #f5f1ec 50%, #e8ddd4 75%, #f2ece5 100%);
+            background: #f5f5f5;
             min-height: 100vh;
             position: relative;
         }
 
-        /* 添加微妙的纹理效果 */
-        body::before {
-            content: '';
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: 
-                radial-gradient(circle at 20% 50%, rgba(220, 53, 69, 0.02) 0%, transparent 50%),
-                radial-gradient(circle at 80% 20%, rgba(220, 53, 69, 0.02) 0%, transparent 50%),
-                radial-gradient(circle at 40% 80%, rgba(220, 53, 69, 0.02) 0%, transparent 50%);
-            pointer-events: none;
-            z-index: -1;
-        }
+        
         
         /* 导航栏样式 */
         .navbar {
@@ -189,19 +175,7 @@
         }
 
         /* 装饰性元素 */
-        .content-section::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: 
-                radial-gradient(ellipse at top left, rgba(220, 53, 69, 0.05) 0%, transparent 60%),
-                radial-gradient(ellipse at bottom right, rgba(220, 53, 69, 0.03) 0%, transparent 60%);
-            pointer-events: none;
-            z-index: -1;
-        }
+        
         
         .section-title {
             text-align: center;
@@ -259,8 +233,7 @@
         }
 
         .chart-container {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
+            background: #ffffff; 
             border-radius: 15px; 
             box-shadow: 0 15px 35px rgba(0,0,0,0.08);
             overflow: hidden; 
@@ -318,21 +291,26 @@
             transform: translateY(0);
         }
 
-        /* Chart styles */
+        /* Chart styles - 修改图表容器背景为白色 */
         #chartdiv {
             overflow: auto;
+            background: #ffffff !important; /* 强制白色背景 */
+            border-radius: 15px;
+            padding: 20px;
         }
 
         #serpentinediv {
             width: 50%;
             height: 600px;
             float: left;
+            background: #ffffff !important; /* 强制白色背景 */
         }
 
         #mapdiv {
             width: 50%;
             height: 600px;
             float: left;
+            background: #ffffff !important; /* 强制白色背景 */
         }
 
         @media (max-width: 768px) {
@@ -340,6 +318,7 @@
                 width: 100%;
                 height: 400px;
                 float: none;
+                background: #ffffff !important; /* 强制白色背景 */
             }
         }
     </style>
@@ -525,7 +504,7 @@
             });
         });
 
-        // amCharts initialization
+        // amCharts initialization - 修改为白色背景
         am5.ready(function() {
             var mainColor = am5.color(0xc83830);
             var secondaryColor = am5.color(0xd9cec8);
@@ -638,14 +617,21 @@
 
             function makeMapChart() {
                 var root = am5.Root.new("mapdiv");
+                
+                // 设置白色背景
                 root.setThemes([am5themes_Animated.new(root)]);
+                root.interfaceColors.set("fill", am5.color("#ffffff"));
+                root.dom.style.backgroundColor = "#ffffff";
 
                 var chart = root.container.children.push(am5map.MapChart.new(root, {
                     panX: "translateX",
                     panY: "translateY",
                     projection: am5map.geoMercator(),
                     homeGeoPoint: { longitude: 8.7, latitude: 50.5 },
-                    homeZoomLevel: 1.7
+                    homeZoomLevel: 1.7,
+                    background: am5.Rectangle.new(root, {
+                        fill: am5.color("#ffffff")
+                    })
                 }));
 
                 var polygonSeries = chart.series.push(am5map.MapPolygonSeries.new(root, {
@@ -781,14 +767,21 @@
 
             function makeSerpentineChart() {
                 var root = am5.Root.new("serpentinediv");
+                
+                // 设置白色背景
                 root.setThemes([am5themes_Animated.new(root)]);
+                root.interfaceColors.set("fill", am5.color("#ffffff"));
+                root.dom.style.backgroundColor = "#ffffff";
 
                 var chart = root.container.children.push(am5timeline.SerpentineChart.new(root, {
                     levelCount: 3,
                     startLocation: 0.2,
                     endLocation: 1,
                     wheelY: "zoomX",
-                    yAxisRadius: am5.percent(20)
+                    yAxisRadius: am5.percent(20),
+                    background: am5.Rectangle.new(root, {
+                        fill: am5.color("#ffffff")
+                    })
                 }));
 
                 var yRenderer = am5timeline.AxisRendererCurveY.new(root, {});
